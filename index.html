@@ -321,44 +321,44 @@
     </div>
   </section>
 
-  <section class="section has-background-light" id="generation-modes">
+<section class="section has-background-light" id="generation-modes">
     <div class="container is-max-desktop wide-1280">
-      <h2 class="title is-3 section-title has-text-centered">Smooth Continuum of Controllability</h2>
+      <h2 class="title is-3 section-title has-text-centered">Generation Modes</h2>
 
       <p class="section-intro">
-        Instead of rigidly separated modes, TeMuDance allows users to smoothly navigate the trade-off between rhythmic fidelity and semantic steering. By simply adjusting the classifier-free guidance scales during inference, a single trained model yields a continuous spectrum of generation behaviours.
+        Adjusting the guidance scale at inference yields a continuum of behaviours, ranging from text-only generation, to music-only generation, and to joint text-music generation.
       </p>
 
       <div class="columns is-multiline is-variable is-4 mt-4">
 
         <div class="column is-one-third-desktop is-full-mobile">
-          <div class="mode-label">Text-Driven (Null Music)</div>
+          <div class="mode-label">Text-Only Generation</div>
           <figure class="video-card">
             <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
               <source src="static/videos/control_text_only.mp4" type="video/mp4">
             </video>
           </figure>
-          <p class="mode-desc">The motion strictly follows explicit semantic instructions without rhythmic constraints.</p>
+          <p class="mode-desc">Generation under a null music condition.</p>
         </div>
 
         <div class="column is-one-third-desktop is-full-mobile">
-          <div class="mode-label">Music-Driven (Null Text)</div>
+          <div class="mode-label">Music-Only Generation</div>
           <figure class="video-card">
             <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
               <source src="static/videos/control_music_only.mp4" type="video/mp4">
             </video>
           </figure>
-          <p class="mode-desc">The frozen backbone synthesizes high-fidelity, beat-aligned choreography based purely on audio.</p>
+          <p class="mode-desc">Generation without text residual injection.</p>
         </div>
 
         <div class="column is-one-third-desktop is-full-mobile">
-          <div class="mode-label">Joint Control (Music + Text)</div>
+          <div class="mode-label">Joint Generation</div>
           <figure class="video-card">
             <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
               <source src="static/videos/control_joint.mp4" type="video/mp4">
             </video>
           </figure>
-          <p class="mode-desc">Both pathways interact seamlessly, folding user-specified actions naturally into the musical rhythm.</p>
+          <p class="mode-desc">Both conditioning pathways are active.</p>
         </div>
 
       </div>
