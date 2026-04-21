@@ -56,6 +56,33 @@
       height: auto;
     }
 
+    /* ---- Abstract text ---- */
+    .abstract-text {
+      text-align: justify;
+      line-height: 1.7;
+    }
+
+    /* ---- Pipeline figure ---- */
+    .pipeline-figure img{
+      border-radius: 8px;
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+    .pipeline-placeholder{
+      border-radius: 8px;
+      background: #f1f1f1;
+      color: #888;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 16 / 7;
+      font-family: monospace;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+    }
+
     /* ---- Video cards (rounded + overflow hidden) ---- */
     .video-card{
       border-radius: 8px;
@@ -77,6 +104,20 @@
       margin-top: 8px;
       padding: 0 6px;
       line-height: 1.35;
+    }
+
+    /* ---- Mode label above each demo ---- */
+    .mode-label{
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #363636;
+    }
+    .mode-desc{
+      text-align: center;
+      color: #6b6b6b;
+      font-size: 0.95rem;
+      margin-top: 6px;
     }
 
     /* ---- Optional: soften section separation ---- */
@@ -149,10 +190,115 @@
     </div>
   </section>
 
-  <!-- Music + Text Guided Generation (light background) -->
-  <section class="section has-background-light" id="music-text-guided">
+  <!-- Abstract (light) -->
+  <section class="section has-background-light" id="abstract">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
+      <div class="content">
+        <p class="abstract-text">
+          Existing music-driven dance generation approaches have achieved strong realism and effective
+          audio-motion alignment. However, they generally lack semantic controllability, making it difficult
+          to guide specific movements through natural language descriptions. This limitation primarily stems
+          from the absence of large-scale datasets that jointly align music, text, and motion for supervised
+          learning of text-conditioned control. To address this challenge, we propose
+          <strong>TeMuDance</strong>, a framework that enables text-based control for music-conditioned
+          dance generation without requiring any manually annotated music&ndash;text&ndash;motion triplet
+          dataset. TeMuDance introduces a <strong>motion-centred bridging paradigm</strong> that leverages
+          motion as a shared semantic anchor to align disjoint music&ndash;dance and text&ndash;motion
+          datasets within a unified embedding space, enabling cross-modal retrieval of missing modalities
+          for end-to-end training. A lightweight text control branch is then trained on top of a frozen
+          music-to-dance diffusion backbone, preserving rhythmic fidelity while enabling fine-grained
+          semantic guidance. To further suppress noise inherent in the retrieved supervision, we design
+          a dual-stream fine-tuning strategy with confidence-based filtering. We also propose a novel
+          task-aligned metric that quantifies whether textual prompts induce the intended kinematic
+          attributes under music conditioning.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pipeline (white) -->
+  <section class="section has-background-white" id="pipeline">
     <div class="container is-max-desktop wide-1280">
-      <h2 class="title is-3 section-title">Music and Text Guided Generation</h2>
+      <h2 class="title is-3 section-title has-text-centered">Method</h2>
+
+      <figure class="image pipeline-figure">
+        <!-- Replace static/images/pipeline.png with your exported Figure 2 from the paper -->
+        <img src="static/images/pipeline.png"
+             alt="TeMuDance pipeline"
+             loading="lazy"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="pipeline-placeholder" style="display:none;">
+          [ pipeline figure — place at static/images/pipeline.png ]
+        </div>
+      </figure>
+
+      <p class="subtitle has-text-centered mt-4">
+        We learn a motion-centred bank by contrastively aligning disjoint text&ndash;motion and music&ndash;dance
+        datasets in a shared motion space, enabling similarity-filtered modality completion to form pseudo triplets.
+        A pretrained diffusion Transformer is frozen as the backbone, while a text control branch steers denoising
+        and produces rhythm-aligned, semantically controllable dances.
+      </p>
+    </div>
+  </section>
+
+  <!-- Controllability Modes (light) -->
+  <section class="section has-background-light" id="control-modes">
+    <div class="container is-max-desktop wide-1280">
+      <h2 class="title is-3 section-title has-text-centered">Controllability</h2>
+
+      <p class="subtitle has-text-centered">
+        By adjusting the classifier-free guidance scale, TeMuDance offers a smooth continuum between
+        pure text-driven motion, pure music-driven dance, and joint text&ndash;music synthesis
+        &mdash; all from a single trained model.
+      </p>
+
+      <div class="columns is-multiline is-variable is-4 mt-4">
+
+        <!-- Mode 1: Text only -->
+        <div class="column is-one-third-desktop is-full-mobile">
+          <div class="mode-label">Text-Only Control</div>
+          <figure class="video-card">
+            <!-- Replace with your text-only demo -->
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/control_text_only.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <p class="mode-desc">Generation driven only by the textual prompt, without musical rhythm.</p>
+        </div>
+
+        <!-- Mode 2: Music only -->
+        <div class="column is-one-third-desktop is-full-mobile">
+          <div class="mode-label">Music-Only Control</div>
+          <figure class="video-card">
+            <!-- Replace with your music-only demo -->
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/control_music_only.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <p class="mode-desc">Beat-aligned choreography from the frozen music-conditioned backbone.</p>
+        </div>
+
+        <!-- Mode 3: Joint -->
+        <div class="column is-one-third-desktop is-full-mobile">
+          <div class="mode-label">Joint Music + Text Control</div>
+          <figure class="video-card">
+            <!-- Replace with your joint demo -->
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/control_joint.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <p class="mode-desc">The text-specified action is integrated into the rhythmic dance.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Music + Text Guided Generation (white background) -->
+  <section class="section has-background-white" id="music-text-guided">
+    <div class="container is-max-desktop wide-1280">
+      <h2 class="title is-3 section-title has-text-centered">Music and Text Guided Generation</h2>
 
       <div class="columns is-multiline is-variable is-4">
 
@@ -214,10 +360,10 @@
     </div>
   </section>
 
-  <!-- Music-Guided Generation (white background) -->
-  <section class="section has-background-white" id="music-guided">
+  <!-- Music-Guided Generation (light background) -->
+  <section class="section has-background-light" id="music-guided">
     <div class="container is-max-desktop wide-1280">
-      <h2 class="title is-3 section-title">Music-Guided Generation</h2>
+      <h2 class="title is-3 section-title has-text-centered">Music-Guided Generation</h2>
 
       <div class="columns is-multiline is-variable is-4">
 
