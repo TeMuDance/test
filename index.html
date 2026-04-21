@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <!-- Primary Meta Tags -->
+  <title>TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation</title>
+  <meta name="title" content="TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation">
+  <meta name="description" content="TeMuDance enables joint music-text conditioned 3D dance generation with rhythmic alignment and semantic controllability.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="music-to-motion, dance generation, diffusion, controllable generation, text-guided motion, SMPL-X">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation">
+  <meta property="og:description" content="Joint music-text conditioned 3D dance generation with rhythmic alignment and semantic control.">
+  <meta property="og:url" content="YOUR_PROJECT_PAGE_URL">
+  <meta property="og:image" content="static/images/og_banner.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TeMuDance">
+  <meta name="twitter:description" content="Joint music-text conditioned 3D dance generation with rhythmic alignment and semantic control.">
+  <meta name="twitter:image" content="static/images/og_banner.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <!-- Bulma / Icons -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Page-level overrides to ensure styling works even if index.css doesn't define these classes -->
+  <style>
+    /* ---- Global layout tweaks ---- */
+    .section-title { margin-bottom: 1rem; }
+    .section-subtitle { margin-top: 1rem; }
+    .container.is-max-desktop.wide-1280 { max-width: 1280px; }
+
+    /* ---- Teaser image ---- */
+    .temudance-figure img{
+      border-radius: 8px;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ---- Video cards (rounded + overflow hidden) ---- */
+    .video-card{
+      border-radius: 8px;
+      overflow: hidden;   /* critical: keeps the rounded corners visible */
+      background: #000;
+      margin: 0;          /* avoid default figure margin inconsistencies */
+    }
+
+    .demo-video{
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .video-caption{
+      text-align: center;
+      margin-top: 8px;
+      padding: 0 6px;
+      line-height: 1.35;
+    }
+
+    /* ---- Optional: soften section separation ---- */
+    .has-background-light { border-top: 1px solid rgba(0,0,0,0.03); border-bottom: 1px solid rgba(0,0,0,0.03); }
+  </style>
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <!-- Top Hero -->
+  <section class="hero is-white">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">
+              TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation
+            </h1>
+
+            <!-- If double-blind, keep anonymous; otherwise replace with author list -->
+            <div class="is-size-5 publication-authors">
+              <span>Anonymous Authors</span>
+            </div>
+
+            <!-- Links -->
+            <div class="publication-links mt-4">
+
+              <!-- Code -->
+              <span class="link-block">
+                <a href="https://anonymous.4open.science/r/TeMuDance" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser (white) -->
+  <section class="section has-background-white" id="teaser">
+    <div class="container is-max-desktop">
+      <div class="content">
+
+        <figure class="image temudance-figure">
+          <img src="static/images/top_h.png" alt="TeMuDance overview" loading="lazy">
+        </figure>
+
+        <p class="subtitle has-text-centered mt-4">
+          Our model jointly conditions dances on music and text, producing sequences that are both rhythmically aligned and semantically controllable.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Music + Text Guided Generation (light background) -->
+  <section class="section has-background-light" id="music-text-guided">
+    <div class="container is-max-desktop wide-1280">
+      <h2 class="title is-3 section-title">Music and Text Guided Generation</h2>
+
+      <div class="columns is-multiline is-variable is-4">
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/test_12_211_slice32.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">K-pop Music + “A man walks clockwise in a circle.”</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/test_0_063_slice10_kick.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Breaking Music + “A person is kicking with his left leg.”</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/test_0_109_slice25_sways.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Classical Music + “A person sways left and right.”</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/test_0_211_slice20_jump.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">K-pop Music + “A person is jumping.”</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/test_1_012_slice22_spin.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Jazz Music + “A man is spinning.”</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/test_1_092_slice11right.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Popping Music + “A person is dancing towards the right side.”</figcaption>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Music-Guided Generation (white background) -->
+  <section class="section has-background-white" id="music-guided">
+    <div class="container is-max-desktop wide-1280">
+      <h2 class="title is-3 section-title">Music-Guided Generation</h2>
+
+      <div class="columns is-multiline is-variable is-4">
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/dance/test_0_109_slice25.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Classical-Style Dance</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/dance/test_1_063_slice11.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Breaking-Style Dance</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/dance/test_1_092_slice11.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Dai-Style Dance</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/dance/test_1_211_slice21.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Popping-Style Dance</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/dance/test_6_012_slice27.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Jazz-Style Dance</figcaption>
+        </div>
+
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/dance/test_14_204_slice16.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figcaption class="video-caption">Urban-Style Dance</figcaption>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the Academic Project Page Template and adopted from the Nerfies project page.
+              You are free to borrow the source code of this website; please link back to the original template in the footer.
+              <br>
+              Licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
