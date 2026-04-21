@@ -4,15 +4,15 @@
   <meta charset="utf-8">
 
   <!-- Primary Meta Tags -->
-  <title>TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation</title>
-  <meta name="title" content="TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation">
+  <title>TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation</title>
+  <meta name="title" content="TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation">
   <meta name="description" content="TeMuDance enables joint music-text conditioned 3D dance generation with rhythmic alignment and semantic controllability.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="music-to-motion, dance generation, diffusion, controllable generation, text-guided motion, SMPL-X">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation">
+  <meta property="og:title" content="TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation">
   <meta property="og:description" content="Joint music-text conditioned 3D dance generation with rhythmic alignment and semantic control.">
   <meta property="og:url" content="YOUR_PROJECT_PAGE_URL">
   <meta property="og:image" content="static/images/og_banner.png">
@@ -78,7 +78,6 @@
       border-top: 1px solid rgba(0,0,0,0.09);
     }
     .subsection:first-of-type{
-      /* first subsection sits right under the parent intro; a bit more air */
       margin-top: 2.5rem;
     }
     .subsection-eyebrow{
@@ -127,9 +126,9 @@
     /* ---- Video cards (rounded + overflow hidden) ---- */
     .video-card{
       border-radius: 8px;
-      overflow: hidden;   /* critical: keeps the rounded corners visible */
+      overflow: hidden;
       background: #000;
-      margin: 0;          /* avoid default figure margin inconsistencies */
+      margin: 0;
     }
 
     .demo-video{
@@ -193,6 +192,16 @@
       margin-right: 4px;
     }
 
+    /* ---- Conclusion (minimalist) ---- */
+    .conclusion-text{
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      color: #333;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
     /* ---- Optional: soften section separation ---- */
     .has-background-light { border-top: 1px solid rgba(0,0,0,0.03); border-bottom: 1px solid rgba(0,0,0,0.03); }
   </style>
@@ -216,7 +225,7 @@
           <div class="column has-text-centered">
 
             <h1 class="title is-1 publication-title">
-              TeMuDance: Zero-Shot Textual Control for Music-Driven Dance Generation
+              TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation
             </h1>
 
             <!-- If double-blind, keep anonymous; otherwise replace with author list -->
@@ -296,13 +305,10 @@
       <h2 class="title is-3 section-title has-text-centered">Method</h2>
 
       <p class="section-intro">
-        TeMuDance decouples training into two stages. We first pretrain a music-conditioned diffusion
-        backbone that captures rhythm and style. Then, rather than collecting the paired
-        music&ndash;text&ndash;motion triplets the field has been missing, we bridge disjoint
-        music&ndash;dance and text&ndash;motion datasets through a shared motion-centred embedding space
-        and retrieve the missing modality on the fly. A lightweight text control branch is fine-tuned on
-        top of the frozen backbone, giving us fine-grained semantic steering without sacrificing
-        rhythmic fidelity.
+        We pretrain a music-conditioned diffusion backbone, then bridge disjoint music&ndash;dance and
+        text&ndash;motion datasets through a shared motion-centred embedding space to retrieve missing
+        modalities on the fly. A lightweight text control branch is fine-tuned on top of the frozen
+        backbone, enabling semantic steering without sacrificing rhythmic fidelity.
       </p>
 
       <figure class="image pipeline-figure">
@@ -315,19 +321,12 @@
           [ pipeline figure — place at static/images/pipeline.png ]
         </div>
       </figure>
-
-      <p class="subtitle has-text-centered mt-4">
-        We learn a motion-centred bank by contrastively aligning disjoint text&ndash;motion and music&ndash;dance
-        datasets in a shared motion space, enabling similarity-filtered modality completion to form pseudo triplets.
-        A pretrained diffusion Transformer is frozen as the backbone, while a text control branch steers denoising
-        and produces rhythm-aligned, semantically controllable dances.
-      </p>
     </div>
   </section>
 
   <!-- ============================================================
        PARENT SECTION: Textual Control
-       Contains two subsections: Genre-Level + Action-Level
+       Subsections: Action-Level (Part 01) + Genre-Level (Part 02)
        ============================================================ -->
   <section class="section has-background-light" id="textual-control">
     <div class="container is-max-desktop wide-1280">
@@ -335,25 +334,88 @@
       <!-- Parent header + intro -->
       <h2 class="title is-3 section-title has-text-centered">Textual Control</h2>
       <p class="section-intro">
-        Our central contribution is a lightweight text control branch attached on top of a frozen
-        music-to-dance backbone. The branch accepts natural-language prompts and steers the denoising
-        process so that the generated dance follows the textual instruction while still respecting the
-        rhythm of the accompanying music. We expose this control at <strong>two complementary
-        granularities</strong>: <em>genre-level</em>, which shapes the overall stylistic character of
-        the dance, and <em>action-level</em>, which specifies concrete movements such as jumps, kicks,
-        spins, or directional walks. The two subsections below illustrate each in turn.
+        A lightweight text control branch on top of the frozen backbone accepts natural-language prompts
+        and steers generation to follow the instruction while respecting the music's rhythm. We expose
+        this control at two granularities: <em>action-level</em> prompts that specify concrete movements,
+        and <em>genre-level</em> prompts that shape the overall stylistic character.
       </p>
 
-      <!-- ============ Subsection 1: Genre-Level Control ============ -->
+      <!-- ============ Subsection 1: Action-Level Control ============ -->
+      <div class="subsection" id="action-control">
+        <span class="subsection-eyebrow">Part 01 · Fine Action</span>
+        <h3 class="title is-4 subsection-title">Action-Level Control</h3>
+        <p class="subsection-intro">
+          Each clip is generated from a music excerpt paired with a prompt describing a concrete
+          movement &mdash; from trajectory-level cues like <em>&ldquo;walks clockwise in a circle&rdquo;</em>
+          to pose-level actions like <em>&ldquo;kicking with his left leg&rdquo;</em>.
+        </p>
+
+        <div class="columns is-multiline is-variable is-4">
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/test_12_211_slice32.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <figcaption class="video-caption">K-pop Music + “A man walks clockwise in a circle.”</figcaption>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/test_0_063_slice10_kick.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <figcaption class="video-caption">Breaking Music + “A person is kicking with his left leg.”</figcaption>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/test_0_109_slice25_sways.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <figcaption class="video-caption">Classical Music + “A person sways left and right.”</figcaption>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/test_0_211_slice20_jump.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <figcaption class="video-caption">K-pop Music + “A person is jumping.”</figcaption>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/test_1_012_slice22_spin.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <figcaption class="video-caption">Jazz Music + “A man is spinning.”</figcaption>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/test_1_092_slice11right.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <figcaption class="video-caption">Popping Music + “A person is dancing towards the right side.”</figcaption>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ Subsection 2: Genre-Level Control ============ -->
       <div class="subsection" id="genre-control">
-        <span class="subsection-eyebrow">Part 01 · Coarse Style</span>
+        <span class="subsection-eyebrow">Part 02 · Coarse Style</span>
         <h3 class="title is-4 subsection-title">Genre-Level Control</h3>
         <p class="subsection-intro">
-          During training, the text control branch sees composite instructions that concatenate action
-          descriptions with coarse genre tags, so at inference the user can steer the global style
-          through natural language alone. To isolate this effect, each set below <strong>fixes the
-          input music and varies only the genre prompt</strong>, making the change attributable
-          entirely to the textual instruction.
+          To isolate genre-level steering, each set below <strong>fixes the input music and varies
+          only the genre prompt</strong>, so any change is attributable entirely to the text.
         </p>
 
         <!-- Set A: fix Music A, vary genre text -->
@@ -453,94 +515,19 @@
         </div>
       </div>
 
-      <!-- ============ Subsection 2: Action-Level Control ============ -->
-      <div class="subsection" id="action-control">
-        <span class="subsection-eyebrow">Part 02 · Fine Action</span>
-        <h3 class="title is-4 subsection-title">Action-Level Control</h3>
-        <p class="subsection-intro">
-          Moving from global style to fine-grained movement, the text control branch also accepts
-          concrete action descriptions. Each clip below is generated from a music excerpt paired with
-          a natural-language prompt &mdash; from trajectory-level cues such as
-          <em>&ldquo;walks clockwise in a circle&rdquo;</em> to pose-level actions like
-          <em>&ldquo;kicking with his left leg&rdquo;</em>. TeMuDance follows the semantic instruction
-          while preserving the rhythmic character of the accompanying music.
-        </p>
-
-        <div class="columns is-multiline is-variable is-4">
-
-          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
-            <figure class="video-card">
-              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
-                <source src="static/videos/test_12_211_slice32.mp4" type="video/mp4">
-              </video>
-            </figure>
-            <figcaption class="video-caption">K-pop Music + “A man walks clockwise in a circle.”</figcaption>
-          </div>
-
-          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
-            <figure class="video-card">
-              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
-                <source src="static/videos/test_0_063_slice10_kick.mp4" type="video/mp4">
-              </video>
-            </figure>
-            <figcaption class="video-caption">Breaking Music + “A person is kicking with his left leg.”</figcaption>
-          </div>
-
-          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
-            <figure class="video-card">
-              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
-                <source src="static/videos/test_0_109_slice25_sways.mp4" type="video/mp4">
-              </video>
-            </figure>
-            <figcaption class="video-caption">Classical Music + “A person sways left and right.”</figcaption>
-          </div>
-
-          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
-            <figure class="video-card">
-              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
-                <source src="static/videos/test_0_211_slice20_jump.mp4" type="video/mp4">
-              </video>
-            </figure>
-            <figcaption class="video-caption">K-pop Music + “A person is jumping.”</figcaption>
-          </div>
-
-          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
-            <figure class="video-card">
-              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
-                <source src="static/videos/test_1_012_slice22_spin.mp4" type="video/mp4">
-              </video>
-            </figure>
-            <figcaption class="video-caption">Jazz Music + “A man is spinning.”</figcaption>
-          </div>
-
-          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
-            <figure class="video-card">
-              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
-                <source src="static/videos/test_1_092_slice11right.mp4" type="video/mp4">
-              </video>
-            </figure>
-            <figcaption class="video-caption">Popping Music + “A person is dancing towards the right side.”</figcaption>
-          </div>
-
-        </div>
-      </div>
-
     </div>
   </section>
 
   <!-- ============================================================
-       Music-Guided Generation (separate from Textual Control)
-       No text conditioning — baseline backbone behaviour
+       Music-Guided Generation (baseline, no text)
        ============================================================ -->
   <section class="section has-background-white" id="music-guided">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Music-Guided Generation</h2>
 
       <p class="section-intro">
-        For completeness, we also show the behaviour of the frozen backbone with textual conditioning
-        turned off entirely. The results below span six musical genres &mdash; Classical, Breaking,
-        Dai, Popping, Jazz, and Urban &mdash; and illustrate that TeMuDance produces coherent,
-        beat-aligned choreography whose stylistic character faithfully reflects each input soundtrack.
+        With textual conditioning turned off, the frozen backbone alone produces coherent, beat-aligned
+        choreography across six genres &mdash; Classical, Breaking, Dai, Popping, Jazz, and Urban.
       </p>
 
       <div class="columns is-multiline is-variable is-4">
@@ -600,6 +587,22 @@
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Conclusion (minimalist)
+       ============================================================ -->
+  <section class="section has-background-light" id="conclusion">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Conclusion</h2>
+      <p class="conclusion-text">
+        TeMuDance brings fine-grained textual control to music-driven 3D dance generation
+        <em>without</em> paired music&ndash;text&ndash;motion triplets. By bridging disjoint datasets
+        through motion-centred contrastive alignment and attaching a lightweight control branch
+        to a frozen backbone, it supports both action- and genre-level steering while preserving
+        rhythmic fidelity.
+      </p>
     </div>
   </section>
 
