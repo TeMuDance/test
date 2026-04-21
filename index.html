@@ -129,7 +129,8 @@
     .video-card{
       border-radius: 8px;
       overflow: hidden;
-      background: #000;
+      background: #ffffff; /* Changed from #000 to white for transparent GIFs */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06); /* Added slight shadow for better card appearance */
       margin: 0;
     }
 
@@ -138,7 +139,7 @@
       aspect-ratio: 16 / 9;
       display: block;
       object-fit: cover;
-      background: #000;
+      background: #ffffff; /* Changed from #000 to white */
     }
 
     .video-caption{
@@ -256,7 +257,7 @@
 
   <section class="section bg-white" id="teaser">
     <div class="container is-max-desktop">
-      <div class="content" style="max-width: 880px; margin: 0 auto;">
+      <div class="content" style="max-width: 800px; margin: 0 auto;">
 
         <figure class="image temudance-figure">
           <img src="static/images/top_h.png" alt="TeMuDance overview" loading="lazy">
@@ -308,7 +309,7 @@
       </p>
 
       <figure class="image pipeline-figure">
-        <img src="Figure/Picture 1.png"
+        <img src="Figure/Picture 1.pdf"
              alt="TeMuDance pipeline"
              loading="lazy"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -324,7 +325,9 @@
       <h2 class="title is-3 section-title has-text-centered">Generation Modes</h2>
 
       <p class="section-intro">
-        Adjusting the guidance scale at inference yields a continuum of behaviours, ranging from text-only generation, to music-only generation, and to joint text-music generation.
+        Adjusting the guidance scale at inference yields a continuum of behaviours, ranging from text-only generation, to music-only generation, and to joint text-music generation. 
+        <br><br>
+        <span style="display:inline-block; padding: 4px 12px; background-color: #e5e5e5; border-radius: 4px; font-weight: 600; font-size: 0.9rem;">Prompt: "Walk around"</span>
       </p>
 
       <div class="columns is-multiline is-variable is-4 mt-4">
