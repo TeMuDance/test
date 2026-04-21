@@ -146,6 +146,20 @@
       line-height: 1.35;
     }
 
+    /* ---- Mode label above each demo (used in Generation Modes overview) ---- */
+    .mode-label{
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #363636;
+    }
+    .mode-desc{
+      text-align: center;
+      color: #6b6b6b;
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
     /* ---- Genre comparison set (same music, different genre text) ---- */
     .genre-set{
       margin-bottom: 2.25rem;
@@ -325,19 +339,68 @@
   </section>
 
   <!-- ============================================================
-       PARENT SECTION: Textual Control
-       Subsections: Action-Level (Part 01) + Genre-Level (Part 02)
+       Generation Modes (overview) — 3 side-by-side demos
        ============================================================ -->
-  <section class="section has-background-light" id="textual-control">
+  <section class="section has-background-light" id="generation-modes">
+    <div class="container is-max-desktop wide-1280">
+      <h2 class="title is-3 section-title has-text-centered">Generation Modes</h2>
+
+      <p class="section-intro">
+        A single trained model supports three generation modes, selected at inference by adjusting the
+        guidance scales on the two conditioning pathways.
+      </p>
+
+      <div class="columns is-multiline is-variable is-4 mt-4">
+
+        <!-- Mode 1: Text only -->
+        <div class="column is-one-third-desktop is-full-mobile">
+          <div class="mode-label">Text Only</div>
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/control_text_only.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <p class="mode-desc">Null music; the motion follows only the prompt.</p>
+        </div>
+
+        <!-- Mode 2: Music only -->
+        <div class="column is-one-third-desktop is-full-mobile">
+          <div class="mode-label">Music Only</div>
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/control_music_only.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <p class="mode-desc">Null text; beat-aligned dance from the frozen backbone.</p>
+        </div>
+
+        <!-- Mode 3: Joint -->
+        <div class="column is-one-third-desktop is-full-mobile">
+          <div class="mode-label">Joint (Music + Text)</div>
+          <figure class="video-card">
+            <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+              <source src="static/videos/control_joint.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <p class="mode-desc">Both conditions active; text action folded into the rhythm.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Music + Text Generation (parent)
+       Subsections: Action-Level + Genre-Level
+       ============================================================ -->
+  <section class="section has-background-white" id="music-text-generation">
     <div class="container is-max-desktop wide-1280">
 
-      <!-- Parent header + intro -->
-      <h2 class="title is-3 section-title has-text-centered">Textual Control</h2>
+      <h2 class="title is-3 section-title has-text-centered">Music + Text Generation</h2>
       <p class="section-intro">
-        A lightweight text control branch on top of the frozen backbone accepts natural-language prompts
-        and steers generation to follow the instruction while respecting the music's rhythm. We expose
-        this control at two granularities: <em>action-level</em> prompts that specify concrete movements,
-        and <em>genre-level</em> prompts that shape the overall stylistic character.
+        The joint mode is where TeMuDance's contribution lies. The text control branch accepts prompts
+        at two granularities: <em>action-level</em>, specifying concrete movements, and
+        <em>genre-level</em>, shaping the overall stylistic character.
       </p>
 
       <!-- ============ Subsection 1: Action-Level Control ============ -->
@@ -519,11 +582,11 @@
   </section>
 
   <!-- ============================================================
-       Music-Guided Generation (baseline, no text)
+       Music-Only Generation (no text)
        ============================================================ -->
-  <section class="section has-background-white" id="music-guided">
+  <section class="section has-background-light" id="music-only">
     <div class="container is-max-desktop wide-1280">
-      <h2 class="title is-3 section-title has-text-centered">Music-Guided Generation</h2>
+      <h2 class="title is-3 section-title has-text-centered">Music-Only Generation</h2>
 
       <p class="section-intro">
         With textual conditioning turned off, the frozen backbone alone produces coherent, beat-aligned
@@ -593,7 +656,7 @@
   <!-- ============================================================
        Conclusion (minimalist)
        ============================================================ -->
-  <section class="section has-background-light" id="conclusion">
+  <section class="section has-background-white" id="conclusion">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Conclusion</h2>
       <p class="conclusion-text">
