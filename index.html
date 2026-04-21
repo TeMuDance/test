@@ -3,14 +3,12 @@
 <head>
   <meta charset="utf-8">
 
-  <!-- Primary Meta Tags -->
   <title>TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation</title>
   <meta name="title" content="TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation">
   <meta name="description" content="TeMuDance enables joint music-text conditioned 3D dance generation with rhythmic alignment and semantic controllability.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="music-to-motion, dance generation, diffusion, controllable generation, text-guided motion, SMPL-X">
 
-  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation">
   <meta property="og:description" content="Joint music-text conditioned 3D dance generation with rhythmic alignment and semantic control.">
@@ -19,29 +17,23 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TeMuDance">
   <meta name="twitter:description" content="Joint music-text conditioned 3D dance generation with rhythmic alignment and semantic control.">
   <meta name="twitter:image" content="static/images/og_banner.png">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
-  <!-- Bulma / Icons -->
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- Your CSS -->
   <link rel="stylesheet" href="static/css/index.css">
 
-  <!-- Page-level overrides to ensure styling works even if index.css doesn't define these classes -->
   <style>
     /* ---- Global layout tweaks ---- */
     .section-title { margin-bottom: 1rem; }
@@ -220,7 +212,6 @@
     .has-background-light { border-top: 1px solid rgba(0,0,0,0.03); border-bottom: 1px solid rgba(0,0,0,0.03); }
   </style>
 
-  <!-- JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
@@ -231,7 +222,6 @@
 
 <body>
 
-  <!-- Top Hero -->
   <section class="hero is-white">
     <div class="hero-body">
       <div class="container is-max-desktop">
@@ -242,15 +232,12 @@
               TeMuDance: Contrastive Alignment-Based Textual Control for Music-Driven Dance Generation
             </h1>
 
-            <!-- If double-blind, keep anonymous; otherwise replace with author list -->
             <div class="is-size-5 publication-authors">
               <span>Anonymous Authors</span>
             </div>
 
-            <!-- Links -->
             <div class="publication-links mt-4">
 
-              <!-- Code -->
               <span class="link-block">
                 <a href="https://anonymous.4open.science/r/TeMuDance" target="_blank"
                    class="external-link button is-normal is-rounded is-dark">
@@ -269,7 +256,6 @@
     </div>
   </section>
 
-  <!-- Teaser (white) -->
   <section class="section has-background-white" id="teaser">
     <div class="container is-max-desktop">
       <div class="content">
@@ -286,7 +272,6 @@
     </div>
   </section>
 
-  <!-- Abstract (light) -->
   <section class="section has-background-light" id="abstract">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
@@ -313,7 +298,6 @@
     </div>
   </section>
 
-  <!-- Pipeline (white) -->
   <section class="section has-background-white" id="pipeline">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Method</h2>
@@ -326,7 +310,6 @@
       </p>
 
       <figure class="image pipeline-figure">
-        <!-- Replace static/images/pipeline.png with your exported Figure 2 from the paper -->
         <img src="static/images/pipeline.png"
              alt="TeMuDance pipeline"
              loading="lazy"
@@ -338,79 +321,63 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       Generation Modes (overview) — 3 side-by-side demos
-       ============================================================ -->
   <section class="section has-background-light" id="generation-modes">
     <div class="container is-max-desktop wide-1280">
-      <h2 class="title is-3 section-title has-text-centered">Generation Modes</h2>
+      <h2 class="title is-3 section-title has-text-centered">Smooth Continuum of Controllability</h2>
 
       <p class="section-intro">
-        A single trained model supports three generation modes, selected at inference by adjusting the
-        guidance scales on the two conditioning pathways.
+        Instead of rigidly separated modes, TeMuDance allows users to smoothly navigate the trade-off between rhythmic fidelity and semantic steering. By simply adjusting the classifier-free guidance scales during inference, a single trained model yields a continuous spectrum of generation behaviours.
       </p>
 
       <div class="columns is-multiline is-variable is-4 mt-4">
 
-        <!-- Mode 1: Text only -->
         <div class="column is-one-third-desktop is-full-mobile">
-          <div class="mode-label">Text Only</div>
+          <div class="mode-label">Text-Driven (Null Music)</div>
           <figure class="video-card">
             <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
               <source src="static/videos/control_text_only.mp4" type="video/mp4">
             </video>
           </figure>
-          <p class="mode-desc">Null music; the motion follows only the prompt.</p>
+          <p class="mode-desc">The motion strictly follows explicit semantic instructions without rhythmic constraints.</p>
         </div>
 
-        <!-- Mode 2: Music only -->
         <div class="column is-one-third-desktop is-full-mobile">
-          <div class="mode-label">Music Only</div>
+          <div class="mode-label">Music-Driven (Null Text)</div>
           <figure class="video-card">
             <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
               <source src="static/videos/control_music_only.mp4" type="video/mp4">
             </video>
           </figure>
-          <p class="mode-desc">Null text; beat-aligned dance from the frozen backbone.</p>
+          <p class="mode-desc">The frozen backbone synthesizes high-fidelity, beat-aligned choreography based purely on audio.</p>
         </div>
 
-        <!-- Mode 3: Joint -->
         <div class="column is-one-third-desktop is-full-mobile">
-          <div class="mode-label">Joint (Music + Text)</div>
+          <div class="mode-label">Joint Control (Music + Text)</div>
           <figure class="video-card">
             <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
               <source src="static/videos/control_joint.mp4" type="video/mp4">
             </video>
           </figure>
-          <p class="mode-desc">Both conditions active; text action folded into the rhythm.</p>
+          <p class="mode-desc">Both pathways interact seamlessly, folding user-specified actions naturally into the musical rhythm.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       Music + Text Generation (parent)
-       Subsections: Action-Level + Genre-Level
-       ============================================================ -->
   <section class="section has-background-white" id="music-text-generation">
     <div class="container is-max-desktop wide-1280">
 
-      <h2 class="title is-3 section-title has-text-centered">Music + Text Generation</h2>
+      <h2 class="title is-3 section-title has-text-centered">Fine-Grained Semantic Control under Musical Guidance</h2>
       <p class="section-intro">
-        The joint mode is where TeMuDance's contribution lies. The text control branch accepts prompts
-        at two granularities: <em>action-level</em>, specifying concrete movements, and
-        <em>genre-level</em>, shaping the overall stylistic character.
+        Unlike previous methods restricted to coarse genre labels, TeMuDance introduces precise, fine-grained semantic steering into music-driven dance. Our framework uses a composite instruction strategy to align global stylistic cues with explicit local actions.
       </p>
 
-      <!-- ============ Subsection 1: Action-Level Control ============ -->
       <div class="subsection" id="action-control">
-        <span class="subsection-eyebrow">Part 01 · Fine Action</span>
+        <span class="subsection-eyebrow">Part 01 · Fine-Grained Action Control</span>
         <h3 class="title is-4 subsection-title">Action-Level Control</h3>
         <p class="subsection-intro">
-          Each clip is generated from a music excerpt paired with a prompt describing a concrete
-          movement &mdash; from trajectory-level cues like <em>&ldquo;walks clockwise in a circle&rdquo;</em>
-          to pose-level actions like <em>&ldquo;kicking with his left leg&rdquo;</em>.
+          Precisely specify concrete movements &mdash; from spatial trajectories like <em>&ldquo;walks clockwise in a circle&rdquo;</em> to explicit poses like <em>&ldquo;kicking with his left leg&rdquo;</em> &mdash; and seamlessly integrate them into the choreographic flow.
         </p>
 
         <div class="columns is-multiline is-variable is-4">
@@ -472,16 +439,13 @@
         </div>
       </div>
 
-      <!-- ============ Subsection 2: Genre-Level Control ============ -->
       <div class="subsection" id="genre-control">
-        <span class="subsection-eyebrow">Part 02 · Coarse Style</span>
+        <span class="subsection-eyebrow">Part 02 · Global Stylistic Guidance</span>
         <h3 class="title is-4 subsection-title">Genre-Level Control</h3>
         <p class="subsection-intro">
-          To isolate genre-level steering, each set below <strong>fixes the input music and varies
-          only the genre prompt</strong>, so any change is attributable entirely to the text.
+          Steer the overall dance genre through text. To isolate genre-level steering, each set below <strong>fixes the input music and varies only the genre prompt</strong>, allowing the model to adapt the same music track into entirely different choreographic styles based on language prompts.
         </p>
 
-        <!-- Set A: fix Music A, vary genre text -->
         <div class="genre-set">
           <div class="genre-set-header">
             <span class="genre-set-tag">Music A</span>
@@ -492,7 +456,6 @@
 
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
               <figure class="video-card">
-                <!-- Replace: Music A + Jazz-style prompt -->
                 <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
                   <source src="static/videos/genre_A_jazz.mp4" type="video/mp4">
                 </video>
@@ -504,7 +467,6 @@
 
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
               <figure class="video-card">
-                <!-- Replace: Music A + Breaking-style prompt -->
                 <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
                   <source src="static/videos/genre_A_breaking.mp4" type="video/mp4">
                 </video>
@@ -516,7 +478,6 @@
 
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
               <figure class="video-card">
-                <!-- Replace: Music A + Classical-style prompt -->
                 <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
                   <source src="static/videos/genre_A_classical.mp4" type="video/mp4">
                 </video>
@@ -529,7 +490,6 @@
           </div>
         </div>
 
-        <!-- Set B: fix Music B, vary genre text -->
         <div class="genre-set">
           <div class="genre-set-header">
             <span class="genre-set-tag">Music B</span>
@@ -540,7 +500,6 @@
 
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
               <figure class="video-card">
-                <!-- Replace: Music B + Jazz-style prompt -->
                 <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
                   <source src="static/videos/genre_B_jazz.mp4" type="video/mp4">
                 </video>
@@ -552,7 +511,6 @@
 
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
               <figure class="video-card">
-                <!-- Replace: Music B + Popping-style prompt -->
                 <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
                   <source src="static/videos/genre_B_popping.mp4" type="video/mp4">
                 </video>
@@ -564,7 +522,6 @@
 
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
               <figure class="video-card">
-                <!-- Replace: Music B + Urban-style prompt -->
                 <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
                   <source src="static/videos/genre_B_urban.mp4" type="video/mp4">
                 </video>
@@ -581,9 +538,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       Music-Only Generation (no text)
-       ============================================================ -->
   <section class="section has-background-light" id="music-only">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Music-Only Generation</h2>
@@ -653,9 +607,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       Conclusion (minimalist)
-       ============================================================ -->
   <section class="section has-background-white" id="conclusion">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Conclusion</h2>
@@ -669,7 +620,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="columns is-centered">
