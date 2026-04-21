@@ -62,6 +62,15 @@
       line-height: 1.7;
     }
 
+    /* ---- Section intro text (shared) ---- */
+    .section-intro{
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+      text-align: center;
+      color: #4a4a4a;
+      line-height: 1.65;
+    }
+
     /* ---- Pipeline figure ---- */
     .pipeline-figure img{
       border-radius: 8px;
@@ -106,7 +115,7 @@
       line-height: 1.35;
     }
 
-    /* ---- Mode label above each demo ---- */
+    /* ---- Mode label above each demo (used in Controllability) ---- */
     .mode-label{
       text-align: center;
       font-weight: 600;
@@ -118,6 +127,57 @@
       color: #6b6b6b;
       font-size: 0.95rem;
       margin-top: 6px;
+    }
+
+    /* ---- Genre comparison set ---- */
+    .genre-set{
+      margin-bottom: 2.5rem;
+    }
+    .genre-set:last-child{
+      margin-bottom: 0;
+    }
+    .genre-set-header{
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .genre-set-tag{
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #363636;
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+    .genre-set-title{
+      font-weight: 600;
+      color: #363636;
+      font-size: 1.05rem;
+    }
+    .genre-set-sub{
+      color: #7a7a7a;
+      font-size: 0.92rem;
+      font-style: italic;
+    }
+    .genre-text-caption{
+      text-align: center;
+      margin-top: 8px;
+      line-height: 1.35;
+    }
+    .genre-text-caption .glabel{
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin-right: 4px;
     }
 
     /* ---- Optional: soften section separation ---- */
@@ -222,6 +282,16 @@
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Method</h2>
 
+      <p class="section-intro">
+        TeMuDance decouples training into two stages. We first pretrain a music-conditioned diffusion
+        backbone that captures rhythm and style. Then, rather than collecting the paired
+        music&ndash;text&ndash;motion triplets the field has been missing, we bridge disjoint
+        music&ndash;dance and text&ndash;motion datasets through a shared motion-centred embedding space
+        and retrieve the missing modality on the fly. A lightweight text control branch is fine-tuned on
+        top of the frozen backbone, giving us fine-grained semantic steering without sacrificing
+        rhythmic fidelity.
+      </p>
+
       <figure class="image pipeline-figure">
         <!-- Replace static/images/pipeline.png with your exported Figure 2 from the paper -->
         <img src="static/images/pipeline.png"
@@ -245,12 +315,15 @@
   <!-- Controllability Modes (light) -->
   <section class="section has-background-light" id="control-modes">
     <div class="container is-max-desktop wide-1280">
-      <h2 class="title is-3 section-title has-text-centered">Controllability</h2>
+      <h2 class="title is-3 section-title has-text-centered">Controllability at a Glance</h2>
 
-      <p class="subtitle has-text-centered">
-        By adjusting the classifier-free guidance scale, TeMuDance offers a smooth continuum between
-        pure text-driven motion, pure music-driven dance, and joint text&ndash;music synthesis
-        &mdash; all from a single trained model.
+      <p class="section-intro">
+        Because the text control branch is attached to a frozen music backbone, TeMuDance supports
+        three modes of generation from a single trained model. By adjusting the classifier-free guidance
+        scales on the two conditioning pathways, the user can move smoothly between purely text-driven
+        motion, purely music-driven dance, and joint text&ndash;music synthesis. The following sections
+        walk through each of these modes in detail &mdash; starting from coarse genre-level style control,
+        moving to fine-grained action-level prompts, and finishing with the unconditional music-only setting.
       </p>
 
       <div class="columns is-multiline is-variable is-4 mt-4">
@@ -295,10 +368,133 @@
     </div>
   </section>
 
-  <!-- Music + Text Guided Generation (white background) -->
-  <section class="section has-background-white" id="music-text-guided">
+  <!-- Genre Control (white) — SAME music, varied genre text -->
+  <section class="section has-background-white" id="genre-control">
+    <div class="container is-max-desktop wide-1280">
+      <h2 class="title is-3 section-title has-text-centered">Genre Control</h2>
+
+      <p class="section-intro">
+        We begin with the coarsest level of textual control: the global stylistic character of the
+        dance. During training, the text control branch sees composite instructions that concatenate
+        action descriptions with coarse genre tags, so at inference time the user can steer the overall
+        style through natural language. To isolate this effect, each set below <strong>fixes the input
+        music and varies only the genre prompt</strong>, making the change attributable entirely to the
+        textual instruction.
+      </p>
+
+      <!-- ============ Set A: fix Music A, vary genre text ============ -->
+      <div class="genre-set">
+        <div class="genre-set-header">
+          <span class="genre-set-tag">Music A</span>
+          <span class="genre-set-title">Same music clip, three genre prompts</span>
+          <!-- Optional: add a short descriptor for Music A here, e.g. a tempo/BPM hint -->
+        </div>
+
+        <div class="columns is-multiline is-variable is-4">
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <!-- Replace: Music A + Jazz-style prompt -->
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/genre_A_jazz.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <p class="genre-text-caption">
+              <span class="glabel">Text</span>“This is a Jazz-style dance.”
+            </p>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <!-- Replace: Music A + Breaking-style prompt -->
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/genre_A_breaking.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <p class="genre-text-caption">
+              <span class="glabel">Text</span>“This is a Breaking-style dance.”
+            </p>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <!-- Replace: Music A + Classical-style prompt -->
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/genre_A_classical.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <p class="genre-text-caption">
+              <span class="glabel">Text</span>“This is a Classical-style dance.”
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ Set B: fix Music B, vary genre text ============ -->
+      <div class="genre-set">
+        <div class="genre-set-header">
+          <span class="genre-set-tag">Music B</span>
+          <span class="genre-set-title">A different music clip, same three prompts</span>
+        </div>
+
+        <div class="columns is-multiline is-variable is-4">
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <!-- Replace: Music B + Jazz-style prompt -->
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/genre_B_jazz.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <p class="genre-text-caption">
+              <span class="glabel">Text</span>“This is a Jazz-style dance.”
+            </p>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <!-- Replace: Music B + Popping-style prompt -->
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/genre_B_popping.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <p class="genre-text-caption">
+              <span class="glabel">Text</span>“This is a Popping-style dance.”
+            </p>
+          </div>
+
+          <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+            <figure class="video-card">
+              <!-- Replace: Music B + Urban-style prompt -->
+              <video class="demo-video" controls muted autoplay loop playsinline preload="metadata">
+                <source src="static/videos/genre_B_urban.mp4" type="video/mp4">
+              </video>
+            </figure>
+            <p class="genre-text-caption">
+              <span class="glabel">Text</span>“This is an Urban-style dance.”
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Music + Text Guided Generation (light) -->
+  <section class="section has-background-light" id="music-text-guided">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Music and Text Guided Generation</h2>
+
+      <p class="section-intro">
+        Moving from global style to fine-grained movement, we next show joint music and text conditioning
+        at the action level. Each clip below is generated from a music excerpt paired with a
+        natural-language prompt describing a specific movement &mdash; from trajectory-level cues such as
+        <em>&ldquo;walks clockwise in a circle&rdquo;</em> to fine-grained pose-level actions like
+        <em>&ldquo;kicking with his left leg&rdquo;</em>. TeMuDance follows the semantic instruction
+        while preserving the rhythmic character of the accompanying music.
+      </p>
 
       <div class="columns is-multiline is-variable is-4">
 
@@ -360,10 +556,17 @@
     </div>
   </section>
 
-  <!-- Music-Guided Generation (light background) -->
-  <section class="section has-background-light" id="music-guided">
+  <!-- Music-Guided Generation (white) -->
+  <section class="section has-background-white" id="music-guided">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Music-Guided Generation</h2>
+
+      <p class="section-intro">
+        Finally, we turn off textual conditioning entirely and let the frozen backbone generate dances
+        from music alone. The results below span six musical genres &mdash; Classical, Breaking, Dai,
+        Popping, Jazz, and Urban &mdash; and illustrate that TeMuDance produces coherent, beat-aligned
+        choreography whose stylistic character faithfully reflects each input soundtrack.
+      </p>
 
       <div class="columns is-multiline is-variable is-4">
 
