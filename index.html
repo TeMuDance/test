@@ -35,6 +35,16 @@
   <link rel="stylesheet" href="static/css/index.css">
 
   <style>
+    /* ---- Background Utilities (Strict Alternating) ---- */
+    .bg-white { 
+      background-color: #ffffff !important; 
+    }
+    .bg-light { 
+      background-color: #f7f7f7 !important; 
+      border-top: 1px solid rgba(0,0,0,0.05); 
+      border-bottom: 1px solid rgba(0,0,0,0.05); 
+    }
+
     /* ---- Global layout tweaks ---- */
     .section-title { margin-bottom: 1rem; }
     .section-subtitle { margin-top: 1rem; }
@@ -198,18 +208,15 @@
       margin-right: 4px;
     }
 
-    /* ---- Conclusion (minimalist) ---- */
+    /* ---- Conclusion (left-aligned, justified, expanded) ---- */
     .conclusion-text{
-      max-width: 760px;
+      max-width: 900px;
       margin: 0 auto;
-      text-align: center;
+      text-align: justify;
       color: #333;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       line-height: 1.7;
     }
-
-    /* ---- Optional: soften section separation ---- */
-    .has-background-light { border-top: 1px solid rgba(0,0,0,0.03); border-bottom: 1px solid rgba(0,0,0,0.03); }
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -256,7 +263,7 @@
     </div>
   </section>
 
-  <section class="section has-background-white" id="teaser">
+  <section class="section bg-white" id="teaser">
     <div class="container is-max-desktop">
       <div class="content">
 
@@ -272,7 +279,7 @@
     </div>
   </section>
 
-  <section class="section has-background-light" id="abstract">
+  <section class="section bg-light" id="abstract">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
       <div class="content">
@@ -298,7 +305,7 @@
     </div>
   </section>
 
-  <section class="section has-background-white" id="pipeline">
+  <section class="section bg-white" id="pipeline">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Method</h2>
 
@@ -321,7 +328,7 @@
     </div>
   </section>
 
-  <section class="section has-background-light" id="generation-modes">
+  <section class="section bg-light" id="generation-modes">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Generation Modes</h2>
 
@@ -365,7 +372,7 @@
     </div>
   </section>
 
-  <section class="section has-background-white" id="music-text-generation">
+  <section class="section bg-white" id="music-text-generation">
     <div class="container is-max-desktop wide-1280">
 
       <h2 class="title is-3 section-title has-text-centered">Fine-Grained Semantic Control under Musical Guidance</h2>
@@ -538,7 +545,7 @@
     </div>
   </section>
 
-  <section class="section has-background-light" id="music-only">
+  <section class="section bg-light" id="music-only">
     <div class="container is-max-desktop wide-1280">
       <h2 class="title is-3 section-title has-text-centered">Music-Only Generation</h2>
 
@@ -607,15 +614,14 @@
     </div>
   </section>
 
-  <section class="section has-background-white" id="conclusion">
+  <section class="section bg-white" id="conclusion">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Conclusion</h2>
       <p class="conclusion-text">
         TeMuDance brings fine-grained textual control to music-driven 3D dance generation
-        <em>without</em> paired music&ndash;text&ndash;motion triplets. By bridging disjoint datasets
+        <em>without</em> requiring paired music&ndash;text&ndash;motion triplets. By bridging disjoint datasets
         through motion-centred contrastive alignment and attaching a lightweight control branch
-        to a frozen backbone, it supports both action- and genre-level steering while preserving
-        rhythmic fidelity.
+        to a frozen backbone, our framework enables precise action execution and global stylistic steering while preserving high rhythmic fidelity.
       </p>
     </div>
   </section>
